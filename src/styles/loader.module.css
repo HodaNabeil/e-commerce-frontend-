@@ -1,0 +1,28 @@
+.loader {
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: var(--thickness) solid transparent;
+  border-right-color: var(--color);
+  position: relative;
+  animation: spin var(--speed) infinite linear;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--thickness) * -1);
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: calc(var(--speed) * 2);
+}
+.loader::after {
+  animation-duration: calc(var(--speed) * 4) ;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
