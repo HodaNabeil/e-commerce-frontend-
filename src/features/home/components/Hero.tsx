@@ -121,7 +121,7 @@ export default function Hero() {
                 {/* CTA Button */}
                 <button
                   onClick={() => router.push("/products")}
-                  className={`px-8 py-4 rounded-full bg-white text-gray-900 font-bold text-lg transition-all 
+                  className={` rounded-2xl    px-8 py-4  bg-white text-gray-900 font-bold text-lg transition-all 
                     duration-300 ease-out delay-50 hover:bg-black hover:text-white  hover:scale-105 shadow-2xl
                     ${
                       activeIndex === i

@@ -1,5 +1,4 @@
 import ProductList from "@/features/home/components/ProductList";
-import React, { Suspense } from "react";
 
 const ProductsPage = async () => {
   return (
@@ -13,9 +12,7 @@ const ProductsPage = async () => {
         </p>
       </div>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <ProductList />
-      </Suspense>
+      <ProductList searchParamsResolved={{ sort: "newest", category: "all" }} />
     </div>
   );
 };

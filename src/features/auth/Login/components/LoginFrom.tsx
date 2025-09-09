@@ -18,6 +18,7 @@ function LoginForm() {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
+    mode: "onChange",
   });
 
   const router = useRouter();
@@ -125,7 +126,7 @@ function LoginForm() {
         </button>
       </form>
       <Link
-        href="/resetpassword"
+        href="/forgotpassword"
         className="hover:underline text-[#f8c33c] hover:text-[#f8c33c]/90 transition-colors cursor-pointer"
       >
         Forgot your password?

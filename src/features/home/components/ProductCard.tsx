@@ -3,7 +3,7 @@
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Star, Heart } from "lucide-react";
+import { ShoppingCart, Star, Heart, Plus, Minus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -207,6 +207,35 @@ const ProductCard = ({ product }: { product: Product }) => {
               ${(product.price * 1.2).toFixed(2)}
             </span>
           </div>
+
+          {
+            // <div className="flex items-center gap-2">
+            //   <span className="text-sm text-gray-600">Quantity:</span>
+            //   <div className="flex items-center border rounded-md">
+            //     <Button
+            //       variant="ghost"
+            //       size="sm"
+            //       onClick={() => handleQuantityChange(item.quantity - 1)}
+            //       className="h-8 w-8 p-0 hover:bg-gray-100"
+            //       disabled={item.quantity <= 1}
+            //     >
+            //       <Minus className="h-3 w-3" />
+            //     </Button>
+            //     <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">
+            //     {}
+            //     </span>
+            //     <Button
+            //       variant="ghost"
+            //       size="sm"
+            //       onClick={() => handleQuantityChange(item.quantity + 1)}
+            //       className="h-8 w-8 p-0 hover:bg-gray-100"
+            //     >
+            //       <Plus className="h-3 w-3" />
+            //     </Button>
+            //   </div>
+            // </div>
+          }
+
           <Button
             onClick={() => handleAddToCart(product)}
             className="flex items-center gap-2 min-w-[100px] sm:min-w-[120px] lg:min-w-[140px] shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105"

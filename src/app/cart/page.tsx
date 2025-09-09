@@ -7,7 +7,6 @@ import OrderSummary from "@/features/cart/components/OrderSummary";
 import Steps from "@/features/cart/components/Steps";
 import useCartStore from "@/features/cart/store/cart";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 function CartContent() {
   const searchParams = useSearchParams();
@@ -53,14 +52,10 @@ function CartContent() {
 
 export default function CartPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center items-center h-screen">
-          <Loader />
-        </div>
-      }
-    >
-      <CartContent />
-    </Suspense>
+    (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    ) > <CartContent />
   );
 }

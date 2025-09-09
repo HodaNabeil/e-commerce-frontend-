@@ -1,6 +1,6 @@
-import ResetForm from "@/features/auth/resetpassword/ResetForm";
+import ResetForm from "@/features/auth/forgotpassword/ForgotPasswordForm";
 
-export default function ResetPassword() {
+export default function ForgotPassword() {
   return (
     <div className="flex items-center justify-center p-8 bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">

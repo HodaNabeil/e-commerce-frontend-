@@ -5,7 +5,7 @@ import { FirebaseError } from "firebase/app";
 import { toast } from "react-toastify";
 import { auth } from "@/lib/firebaseClient";
 
-export default function ResetForm() {
+export default function ForgotPasswordForm() {
   const [form, setForm] = useState({
     email: "",
     loading: false,
@@ -59,11 +59,19 @@ export default function ResetForm() {
       <button
         type="submit"
         disabled={form.loading}
-        className={`w-full text-white font-medium py-2 rounded-lg transition ${
-          form.loading
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-blue-500 hover:bg-blue-600"
-        }`}
+        className={`w-full  py-2 rounded-lg 
+          
+          
+          
+          font-medium text-white  transition-colors cursor-pointer
+          
+          
+          
+          ${
+            form.loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[#f8c33c] hover:bg-[#f8c33c]/90"
+          }`}
       >
         {form.loading ? "Sending..." : "Send Reset Link"}
       </button>

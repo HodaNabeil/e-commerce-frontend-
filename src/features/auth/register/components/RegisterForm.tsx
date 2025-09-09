@@ -29,6 +29,7 @@ function RegisterForm() {
     reset,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
+    mode: "onChange",
   });
 
   const onSubmit = async (data: RegisterFormData) => {
