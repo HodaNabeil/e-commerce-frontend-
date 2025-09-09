@@ -20,7 +20,6 @@ function ShoppingCart() {
   const { cart, clearCart, setIsOpen, isOpen, removeFromCart } =
     useCartAllStore();
 
-  // ✅ totalPrice
   const totalPrice = useMemo(
     () =>
       cart.reduce(
@@ -31,7 +30,6 @@ function ShoppingCart() {
     [cart]
   );
 
-  // ✅ totalItems
   const totalItems = useMemo(
     () => cart.reduce((sum: number, item: CartItems) => sum + item.quantity, 0),
     [cart]
@@ -54,8 +52,8 @@ function ShoppingCart() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        align="start"
-        className="w-96 max-h-[600px] overflow-y-auto border-none rounded-md  mr-40"
+        align="end"
+        className="w-96 max-h-[600px] overflow-y-auto border-none rounded-md  "
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-4">
