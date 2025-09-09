@@ -16,7 +16,7 @@ export default async function middleware(req: NextRequest) {
 
   const isAuth = (await cookies()).get("access_token")?.value;
   const isAuthPage = pathname.startsWith("/login");
-  const protectedRoutes = ["/cart", "/checkout", "/orders", "/profile"];
+  const protectedRoutes = ["/cart", "/orders", "/profile"];
 
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
@@ -48,7 +48,7 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
     // Match all protected routes
     "/cart/:path*",
-    "/checkout/:path*",
+
     "/orders/:path*",
     "/profile/:path*",
     "/settings/:path*",
