@@ -3,12 +3,16 @@
 import { categories } from "@/app-data/categories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function Categories() {
+export default function FilterCategories({
+  searchParamsResolved,
+}: {
+  searchParamsResolved: { sort: string; category: string };
+}) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
 
-  const selectedCategory = searchParams.get("category");
+  const selectedCategory = searchParamsResolved.category;
 
   const handleChangeCategory = (categorySlug: string) => {
     const params = new URLSearchParams(searchParams.toString());

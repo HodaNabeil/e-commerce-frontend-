@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 
-export default function Filter() {
+export default function SortFilter() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();

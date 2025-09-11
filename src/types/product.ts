@@ -7,10 +7,10 @@ export interface Product {
   price: number;
   sizes: string[];
   colors: string[];
-  images: Record<string, string>; // key = اللون , value = رابط الصورة
-  category: string; // Add category field for filtering
+  images: Record<string, string>;
+  category: string;
   createdAt: Date;
-  numReviews: number; // Add numReviews field for displaying number of reviews
+  numReviews: number;
   rating: number;
 }
 

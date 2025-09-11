@@ -1,5 +1,5 @@
-import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { products } from "@/app-data/products";
+import { Product } from "@/types/product";
 
 const sortProducts = (products: Product[], sort: string | null) => {
   switch (sort) {
@@ -10,7 +10,7 @@ const sortProducts = (products: Product[], sort: string | null) => {
     case "name-asc":
       return [...products].sort((a, b) => a.name.localeCompare(b.name));
     case "name-desc":
-      return [...products].sort((a, b) => b.name.localeCompare(b.name));
+      return [...products].sort((a, b) => b.name.localeCompare(a.name));
     case "oldest":
       return [...products].sort((a, b) => a.id - b.id);
     case "newest":
@@ -20,15 +20,17 @@ const sortProducts = (products: Product[], sort: string | null) => {
   }
 };
 
-export default function SortProducts() {
-  const searchParams = useSearchParams();
-  const category = searchParams.get("category");
-  const sort = searchParams.get("sort");
-  const filteredProducts = useMemo(() => {
-    const filtered = category
-      ? products.filter((p) => p.category === category)
+export function getFilteredProducts(searchParamsResolved?: {
+  sort?: string;
+  category?: string;
+}): Product[] {
+  const selectedCategory = searchParamsResolved?.category;
+  const sortType = searchParamsResolved?.sort;
+
+  const filtered =
+    selectedCategory && selectedCategory !== "all"
+      ? products.filter((p) => p.category === selectedCategory)
       : products;
-    return sortProducts(filtered, sort);
-  }, [category, sort]);
-  return <div>SortProducts</div>;
+
+  return sortProducts(filtered, sortType || null);
 }

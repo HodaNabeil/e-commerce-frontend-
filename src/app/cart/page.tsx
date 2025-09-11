@@ -1,6 +1,5 @@
 "use client";
 
-import Loader from "@/components/shared/Loader";
 import Header from "@/features/cart/components/Header";
 import ItemsSteps from "@/features/cart/components/ItemsSteps";
 import OrderSummary from "@/features/cart/components/OrderSummary";
@@ -8,7 +7,7 @@ import Steps from "@/features/cart/components/Steps";
 import useCartStore from "@/features/cart/store/cart";
 import { useSearchParams } from "next/navigation";
 
-function CartContent() {
+export default function Cart() {
   const searchParams = useSearchParams();
   const activeStep = parseInt(searchParams.get("step") || "1");
   const { cart } = useCartStore();
@@ -47,15 +46,5 @@ function CartContent() {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function CartPage() {
-  return (
-    (
-      <div className="flex justify-center items-center h-screen">
-        <Loader />
-      </div>
-    ) > <CartContent />
   );
 }

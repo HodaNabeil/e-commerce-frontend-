@@ -3,7 +3,7 @@
 import { Product } from "@/types/product";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Star, Heart, Plus, Minus } from "lucide-react";
+import { ShoppingCart, Star, Heart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import {
