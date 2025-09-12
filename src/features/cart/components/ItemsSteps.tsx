@@ -30,7 +30,9 @@ export default function ItemsSteps({ activeStep }: { activeStep: number }) {
           </p>
           <p
             className={` font-medium text-sm
-                 ${activeStep === step.id ? " text-white" : " text-gray-400"}`}
+                 ${
+                   activeStep === step.id ? " text-gray-800" : " text-gray-400"
+                 }`}
           >
             {step.title}
           </p>
