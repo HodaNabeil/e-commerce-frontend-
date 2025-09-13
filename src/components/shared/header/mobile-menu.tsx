@@ -1,12 +1,16 @@
+"use client";
+
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
-  SheetClose,
 } from "@/components/ui/sheet";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import BrandLogo from "../BrandLogo";
 import Link from "next/link";
 
 interface MobileMenuProps {
@@ -18,8 +22,6 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ links }: MobileMenuProps) {
-  // const location = useLocation();
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -30,32 +32,29 @@ export default function MobileMenu({ links }: MobileMenuProps) {
       <SheetContent side="right" className="w-80 p-0 bg-background">
         <div className="flex h-full w-full flex-col p-4">
           <SheetHeader className="flex flex-row justify-between items-center">
-            <SheetClose className="p-2 hover:bg-accent rounded-lg transition-colors">
-              <X className="w-5 h-5" />
-            </SheetClose>
-            logogo
+            <BrandLogo
+              className="w-8 h-8 md:w-10 md:h-10"
+              width={40}
+              height={40}
+            />
+            <SheetTitle className="sr-only">القائمة الرئيسية</SheetTitle>
+            <SheetDescription className="sr-only">
+              استخدم هذه القائمة للتنقل بين الصفحات
+            </SheetDescription>
           </SheetHeader>
           <nav className="mt-8 flex-1">
             <ul className="space-y-4">
-              {links.map((link) => (
-                <li key={link.id}>
-                  <Link
-                    href={link.href}
-                    // className={`block py-2 px-4 rounded-lg transition-colors text-right ${
-                    //   location.pathname === link.href
-                    //     ? "bg-primary/10 text-primary"
-                    //     : "hover:bg-accent text-foreground"
-                    // }`}
-                  >
-                    {link.title}
-                  </Link>
-                </li>
-              ))}
+              {Array.isArray(links) &&
+                links.map((link) => (
+                  <li key={link.id}>
+                    <Link href={link.href}>{link.title}</Link>
+                  </li>
+                ))}
             </ul>
           </nav>
           <div className="py-6 flex flex-col items-stretch gap-4 border-t border-border">
             <Link
-              href="/auth/signin"
+              href="/login"
               className={buttonVariants({
                 variant: "outline",
                 className: "w-full justify-center",
@@ -64,7 +63,7 @@ export default function MobileMenu({ links }: MobileMenuProps) {
               دخول
             </Link>
             <Link
-              href="/auth/signup"
+              href="/register"
               className={buttonVariants({
                 className: "w-full justify-center",
               })}
