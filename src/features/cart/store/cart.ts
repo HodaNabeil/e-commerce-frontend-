@@ -1,3 +1,5 @@
+"use client";
+
 import { CartActions, CartItems, CartState } from "@/types/cart";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -75,6 +77,7 @@ const useCartStore = create<CartState & CartActions>()(
         set({ isOpen });
       },
     }),
+
     {
       name: "cart-storage",
       storage: createJSONStorage(() => localStorage),

@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 
 import { ShippingFormValues, shippingFSchema } from "@/validations/cart";

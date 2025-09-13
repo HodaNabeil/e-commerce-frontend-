@@ -1,3 +1,5 @@
+"use client";
+
 import { CartItems } from "@/types/cart";
 import PaymentForm from "./PaymentForm";
 import ProductCard from "./ProductCard";

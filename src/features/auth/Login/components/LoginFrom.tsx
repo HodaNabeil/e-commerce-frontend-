@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation"; // ✅ أضفت useSearchParams
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { LoginFormInputs, loginSchema } from "@/validations/login";
@@ -22,6 +22,7 @@ function LoginForm() {
   });
 
   const router = useRouter();
+  const searchParams = useSearchParams(); // ✅ جبت الـ params
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
@@ -31,7 +32,13 @@ function LoginForm() {
 
       if (user) {
         toast.success("Login successful!");
-        router.push("/");
+
+        const redirect = searchParams.get("redirect");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
       }
     } catch (error: unknown) {
       toast.error(
