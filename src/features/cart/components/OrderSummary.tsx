@@ -21,8 +21,28 @@ export default function OrderSummary({ activeStep }: { activeStep: number }) {
   const shipping: number = 0;
   const discountRate: number = 0.08; // 8% discount
   const discountAmount: number = subtotal * discountRate;
-  const total: number = subtotal + shipping - discountAmount;
+  const total: number = subtotal + shipping - discountAmount
 
+
+
+
+
+
+
+
+
+
+
+
+// router.push("/login?redirect_url=/cart")
+// const seachParams = useSearchPramas()
+
+// const redirect = seachParams.get("redirect
+// const seachParams = useSearchPramas()
+
+// const redirect = seachParams.get("redirect")
+
+// router.push(redirect)
   return (
     <Card className="w-full h-fit">
       <CardHeader className="pb-4">

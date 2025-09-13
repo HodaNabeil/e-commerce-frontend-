@@ -4,13 +4,18 @@ import Header from "@/features/cart/components/Header";
 import ItemsSteps from "@/features/cart/components/ItemsSteps";
 import OrderSummary from "@/features/cart/components/OrderSummary";
 import Steps from "@/features/cart/components/Steps";
-import useCartStore from "@/features/cart/store/cart";
-import { useSearchParams } from "next/navigation";
+import { useCartAllStore } from "@/features/cart/hooks/useCartStore";
 
-export default function Cart() {
-  const searchParams = useSearchParams();
-  const activeStep = parseInt(searchParams.get("step") || "1");
-  const { cart } = useCartStore();
+// eslint-disable-next-line @next/next/no-async-client-component
+export default async function Cart({
+  searchParams,
+}: {
+  searchParams: Promise<{ step?: string }>;
+}) {
+  const params = await searchParams;
+  const activeStep = parseInt(params.step || "1");
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { cart } = useCartAllStore();
   const hasItems = cart.length > 0;
   return (
     <div className="bg-background container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">

@@ -4,12 +4,13 @@ import ProductList from "@/features/home/components/ProductList";
 import SortFilter from "@/features/home/components/SortFilter";
 import { getFilteredProducts } from "@/features/home/components/SortProducts";
 
-const ProductsPage = ({
+const ProductsPage = async ({
   searchParams,
 }: {
-  searchParams?: { sort?: string; category?: string; page?: string };
+  searchParams: Promise<{ sort?: string; category?: string; page?: string }>;
 }) => {
-  const filteredProducts = getFilteredProducts(searchParams ?? {});
+  const params = await searchParams;
+  const filteredProducts = await getFilteredProducts(params || {});
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -24,8 +25,8 @@ const ProductsPage = ({
 
       <FilterCategories
         searchParamsResolved={{
-          sort: searchParams?.sort ?? "",
-          category: searchParams?.category ?? "",
+          sort: params?.sort ?? "",
+          category: params?.category ?? "",
         }}
       />
 
@@ -36,10 +37,10 @@ const ProductsPage = ({
         <SortFilter />
       </div>
 
-      <ProductList searchParams={searchParams ?? {}} />
+      <ProductList searchParams={params ?? {}} />
 
       <PageButtons
-        searchParams={searchParams ?? {}}
+        searchParams={params ?? {}}
         filteredProducts={filteredProducts}
         currentPath="/products"
       />
