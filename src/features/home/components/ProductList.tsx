@@ -1,7 +1,6 @@
 import ProductCard from "./ProductCard";
 import { Product } from "@/types/product";
 import { getFilteredProducts } from "./SortProducts";
-import { ITEMS_PER_PAGE } from "@/config/constants";
 
 export default function ProductList({
   searchParams,
@@ -11,7 +10,7 @@ export default function ProductList({
   const filteredProducts = getFilteredProducts(searchParams);
 
   const currentPage = Number(searchParams.page) || 1;
-
+  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 4;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedProducts = filteredProducts.slice(
     startIndex,

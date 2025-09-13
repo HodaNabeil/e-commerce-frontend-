@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types/product";
-import { ITEMS_PER_PAGE } from "@/config/constants";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 interface PageButtonsProps {
@@ -15,8 +14,10 @@ export default function PageButtons({
   searchParams,
   filteredProducts,
 }: PageButtonsProps) {
+  const ITEMS_PER_PAGE = Number(process.env.NEXT_PUBLIC_ITEMS_PER_PAGE) || 4;
+
   const currentPage = Number(searchParams.page) || 1;
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE || 4);
 
   const router = useRouter();
   const pathname = usePathname();
