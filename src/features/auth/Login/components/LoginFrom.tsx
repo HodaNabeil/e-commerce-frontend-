@@ -22,7 +22,7 @@ function LoginForm() {
   });
 
   const router = useRouter();
-  const searchParams = useSearchParams(); // ✅ جبت الـ params
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 

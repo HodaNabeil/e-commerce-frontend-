@@ -19,7 +19,7 @@ export default async function Cart({
         <div className="mb-8 lg:mb-12">
           <ItemsSteps activeStep={activeStep} />
         </div>
-        <CartClient activeStep={activeStep} searchParams={params} />
+        <CartClient activeStep={activeStep} />
       </div>
     </div>
   );

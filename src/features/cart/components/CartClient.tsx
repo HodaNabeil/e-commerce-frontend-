@@ -4,13 +4,7 @@ import { useCartAllStore } from "../hooks/useCartStore";
 import OrderSummary from "./OrderSummary";
 import Steps from "./Steps";
 
-export default function CartClient({
-  activeStep,
-  searchParams,
-}: {
-  activeStep: number;
-  searchParams: { step?: string };
-}) {
+export default function CartClient({ activeStep }: { activeStep: number }) {
   const { cart } = useCartAllStore();
   const hasItems = cart.length > 0;
 
@@ -29,7 +23,7 @@ export default function CartClient({
       {hasItems && (
         <div className="lg:col-span-1">
           <div className="sticky top-24">
-            <OrderSummary activeStep={activeStep} searchParams={searchParams} />
+            <OrderSummary activeStep={activeStep} />
           </div>
         </div>
       )}
