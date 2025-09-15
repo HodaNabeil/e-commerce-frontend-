@@ -28,10 +28,8 @@ export default function OrderSummary({ activeStep }: { activeStep: number }) {
 
   const handleCheckout = () => {
     if (!user) {
-      // لو مش مسجل هيدخله على login وبعدين يرجعه للcart
       router.push(`/login?redirect=/cart?step=2`);
     } else {
-      // لو مسجل يكمل عادي
       router.push(`/cart?step=2`);
     }
   };
