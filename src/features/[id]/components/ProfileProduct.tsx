@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "@/types/product";
+import { Badge } from "@/components/ui/badge";
 
 export default function ProfileProduct({
   product,
@@ -11,26 +12,36 @@ export default function ProfileProduct({
   selectedSize: string;
 }) {
   return (
-    <div>
+    <div className="space-y-4">
+      {/* Product Title */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          {product.name}
+        </h1>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>Color: {selectedColor}</span>
           <span>•</span>
           <span>Size: {selectedSize.toUpperCase()}</span>
         </div>
       </div>
-      <p className="text-gray-600 text-sm leading-relaxed m-2">
+
+      {/* Product Description */}
+      <p className="text-sm leading-relaxed text-muted-foreground">
         {product.description}
       </p>
-      <div className="text-3xl font-bold text-gray-900 m-2">
-        ${product.price.toFixed(2)}
+
+      {/* Price Section */}
+      <div className="flex items-baseline gap-2">
+        <span className="text-2xl sm:text-3xl font-bold text-primary">
+          ${product.price.toFixed(2)}
+        </span>
+        <span className="text-sm text-muted-foreground line-through">
+          ${(product.price * 1.2).toFixed(2)}
+        </span>
       </div>
-      {/* Product Availability */}
-      <div className="flex items-center gap-2 text-sm text-green-600 m-2">
-        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-        <span>In Stock</span>
-      </div>
+
+      {/* Availability (currently static) */}
+      <Badge className="text-xs">In Stock</Badge>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import useCartStore from "@/features/cart/store/cart";
 import { Product } from "@/types/product";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useCartAllStore } from "@/features/cart/hooks/useCartStore";
 
 interface ProductInteractionProps {
   selectedSize: string;
@@ -22,25 +22,26 @@ export default function ProductInteraction({
 }: ProductInteractionProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const serachParams = useSearchParams();
+  const searchParams = useSearchParams();
   const [quantity, setQuantity] = useState(1);
 
-  const { addToCart } = useCartStore();
+  const { addToCart } = useCartAllStore();
 
+  // ✅ Generic handler for updating URL params
   const handleTypeChange = (type: string, value: string) => {
-    const params = new URLSearchParams(serachParams.toString());
+    const params = new URLSearchParams(searchParams.toString());
     params.set(type, value);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
+  // ✅ Quantity logic
   const handleChangeQuantity = (type: "decrease" | "increase") => {
-    if (type === "increase") {
-      setQuantity((prev) => prev + 1);
-    } else {
-      setQuantity((prev) => Math.max(1, prev - 1));
-    }
+    setQuantity((prev) =>
+      type === "increase" ? prev + 1 : Math.max(1, prev - 1)
+    );
   };
 
+  // ✅ Add product to cart
   const handleAddToCart = () => {
     addToCart({
       ...product,
@@ -48,52 +49,68 @@ export default function ProductInteraction({
       selectedSize,
       selectedColor,
     });
+
     toast.success("Product added to cart");
   };
+
+  // ✅ Buy Now → add to cart + redirect
+  const handleBuyNow = () => {
+    handleAddToCart();
+    router.push("/cart");
+  };
+
   return (
     <div className="space-y-6">
-      <div className="space-y-4">
-        <div>
-          <Label className="text-base font-semibold mb-3 block">Size</Label>
-          <div className="flex gap-3">
-            {product.sizes.map((size) => (
-              <Button
-                key={size}
-                onClick={() => handleTypeChange("size", size)}
-                variant={selectedSize === size ? "default" : "outline"}
-                size="sm"
-                className="w-[40px] h-[40px] rounded-md font-medium cursor-pointer"
-                aria-pressed={selectedSize === size}
-                aria-label={`Select size ${size}`}
-              >
-                {size}
-              </Button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <Label className="text-base font-semibold mb-3 block">Color</Label>
-          <div className="flex gap-3">
-            {product.colors.map((color) => (
-              <Button
-                key={color}
-                onClick={() => handleTypeChange("color", color)}
-                variant="outline"
-                size="sm"
-                className={`w-[40px] h-[40px] rounded-md p-0 border-2 transition-all cursor-pointer ${
-                  selectedColor === color
-                    ? "ring-2 ring-primary ring-offset-2"
-                    : ""
-                }`}
-                style={{ backgroundColor: color }}
-                aria-pressed={selectedColor === color}
-                aria-label={`Select color ${color}`}
-              />
-            ))}
-          </div>
+      {/* Size Selector */}
+      <div>
+        <Label className="text-base font-semibold mb-3 block">Size</Label>
+        <div className="flex gap-3" role="radiogroup" aria-label="Select size">
+          {product.sizes.map((size) => (
+            // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+            <Button
+              key={size}
+              onClick={() => handleTypeChange("size", size)}
+              variant={selectedSize === size ? "default" : "outline"}
+              size="sm"
+              className="w-[40px] h-[40px] rounded-md font-medium cursor-pointer"
+              aria-pressed={selectedSize === size}
+              role="radio"
+              aria-checked={selectedSize === size}
+              aria-label={`Select size ${size}`}
+            >
+              {size}
+            </Button>
+          ))}
         </div>
       </div>
 
+      {/* Color Selector */}
+      <div>
+        <Label className="text-base font-semibold mb-3 block">Color</Label>
+        <div className="flex gap-3" role="radiogroup" aria-label="Select color">
+          {product.colors.map((color) => (
+            // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+            <Button
+              key={color}
+              onClick={() => handleTypeChange("color", color)}
+              variant="outline"
+              size="sm"
+              className={`w-[40px] h-[40px] rounded-md p-0 border-2 transition-all cursor-pointer ${
+                selectedColor === color
+                  ? "ring-2 ring-primary ring-offset-2"
+                  : ""
+              }`}
+              style={{ backgroundColor: color }}
+              aria-pressed={selectedColor === color}
+              role="radio"
+              aria-checked={selectedColor === color}
+              aria-label={`Select color ${color}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Quantity Selector */}
       <div>
         <Label className="text-base font-semibold mb-3 block">Quantity</Label>
         <div className="flex items-center border border-input rounded-md w-fit bg-background">
@@ -121,6 +138,7 @@ export default function ProductInteraction({
         </div>
       </div>
 
+      {/* Action Buttons */}
       <div className="flex flex-col gap-4">
         <Button
           onClick={handleAddToCart}
@@ -132,6 +150,7 @@ export default function ProductInteraction({
         </Button>
 
         <Button
+          onClick={handleBuyNow}
           variant="outline"
           className="w-full h-12 text-base font-semibold cursor-pointer"
           size="lg"
