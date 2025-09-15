@@ -15,7 +15,7 @@ interface ProductInteractionProps {
   product: Product;
 }
 
-export default function ProductInteration({
+export default function ProductInteraction({
   selectedSize,
   selectedColor,
   product,

@@ -10,6 +10,8 @@ export default function BreadcrumbsJsonLd({
   selectedColor: string;
   selectedSize: string;
 }) {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+
   return (
     <Script
       id="breadcrumb-structured-data"
@@ -23,25 +25,25 @@ export default function BreadcrumbsJsonLd({
               "@type": "ListItem",
               position: 1,
               name: "Home",
-              item: "/",
+              item: `${baseUrl}/`,
             },
             {
               "@type": "ListItem",
               position: 2,
               name: "Products",
-              item: "/products",
+              item: `${baseUrl}/products`,
             },
             {
               "@type": "ListItem",
               position: 3,
               name: product.category,
-              item: `/products?category=${product.category}`,
+              item: `${baseUrl}/products?category=${product.category}`,
             },
             {
               "@type": "ListItem",
               position: 4,
               name: product.name,
-              item: `/products/${product.id}?color=${selectedColor}&size=${selectedSize}`,
+              item: `${baseUrl}/products/${product.id}?color=${selectedColor}&size=${selectedSize}`,
             },
           ],
         }),

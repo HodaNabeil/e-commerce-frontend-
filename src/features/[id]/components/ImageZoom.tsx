@@ -2,51 +2,58 @@
 
 import { Product } from "@/types/product";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function ImageZoom({
   product,
   selectedColor,
+  zoomLevel = 300,
 }: {
   product: Product;
   selectedColor: string;
+  zoomLevel?: number;
 }) {
-  const [lensPos, setLensPos] = useState<{ x: number; y: number } | null>(null);
+  const lensRef = useRef<HTMLDivElement>(null);
+  const [isZooming, setIsZooming] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    if (lensRef.current) {
+      lensRef.current.style.top = `${y}%`;
+      lensRef.current.style.left = `${x}%`;
+      lensRef.current.style.backgroundPosition = `${x}% ${y}%`;
+    }
+  };
+
+  const imageSrc =
+    product.images[selectedColor] ?? product.images[product.colors[0]];
 
   return (
     <div
       className="relative w-full h-full overflow-hidden rounded-md cursor-zoom-in"
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        setLensPos({
-          x: ((e.clientX - rect.left) / rect.width) * 100,
-          y: ((e.clientY - rect.top) / rect.height) * 100,
-        });
-      }}
-      onMouseLeave={() => setLensPos(null)}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsZooming(true)}
+      onMouseLeave={() => setIsZooming(false)}
     >
-      {/* الصورة الأساسية */}
       <Image
-        src={product.images[selectedColor] ?? product.images[product.colors[0]]}
+        src={imageSrc}
         alt={product.name}
         fill
         className="object-contain rounded-md select-none"
       />
 
-      {/* العدسة المكبرة */}
-      {lensPos && (
+      {isZooming && (
         <div
-          className="absolute w-40 h-40 rounded-full border border-gray-300 shadow-lg pointer-events-none transition-all duration-200 ease-out"
+          ref={lensRef}
+          className="absolute w-40 h-40 rounded-full border border-gray-300 shadow-lg pointer-events-none transition-transform duration-150 ease-out"
           style={{
-            top: `${lensPos.y}%`,
-            left: `${lensPos.x}%`,
-            transform: "translate(-50%, -50%) scale(1)",
-            backgroundImage: `url(${
-              product.images[selectedColor] ?? product.images[product.colors[0]]
-            })`,
+            transform: "translate(-50%, -50%)",
+            backgroundImage: `url(${imageSrc})`,
             backgroundRepeat: "no-repeat",
-            backgroundSize: "300% 300%",
-            backgroundPosition: `${lensPos.x}% ${lensPos.y}%`,
+            backgroundSize: `${zoomLevel}% ${zoomLevel}%`,
           }}
         />
       )}
