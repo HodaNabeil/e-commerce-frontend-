@@ -33,7 +33,7 @@ const Home = async ({
   const filteredProducts = getFilteredProducts(params);
 
   return (
-    <div>
+    <>
       <Hero />
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16">
@@ -61,7 +61,7 @@ const Home = async ({
           />
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

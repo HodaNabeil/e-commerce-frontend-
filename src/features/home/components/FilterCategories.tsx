@@ -11,13 +11,11 @@ export default function FilterCategories({
   const router = useRouter();
   const pathName = usePathname();
 
-  // category جاي من السيرفر (string أو "")
   const selectedCategory = searchParamsResolved.category || "all";
 
   const handleChangeCategory = (categorySlug: string) => {
     const params = new URLSearchParams();
 
-    // حافظ على الـ sort لو موجود
     if (searchParamsResolved.sort) {
       params.set("sort", searchParamsResolved.sort);
     }

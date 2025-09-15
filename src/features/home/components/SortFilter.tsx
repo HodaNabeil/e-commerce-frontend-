@@ -1,63 +1,84 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCallback, useMemo } from "react";
+
+// ✅ Define sort options with type
+type SortOption = {
+  value: string;
+  label: string;
+};
+
+const SORT_OPTIONS: SortOption[] = [
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+  { value: "name-asc", label: "Name: A → Z" },
+  { value: "name-desc", label: "Name: Z → A" },
+];
 
 export default function SortFilter() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
 
-  const currentSort = searchParams.get("sort") || "newest";
+  // ✅ Current sort value
+  const currentSort = useMemo(
+    () => searchParams.get("sort") || "newest",
+    [searchParams]
+  );
 
-  const handleFilterChange = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", value);
+  // ✅ Handle changes
+  const handleFilterChange = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    router.push(`${pathName}?${params.toString()}`, {
-      scroll: false,
-    });
-  };
+      if (value === "newest") {
+        params.delete("sort"); // clean URL if default
+      } else {
+        params.set("sort", value);
+      }
 
-  const sortOptions = [
-    { value: "newest", label: "Newest First" },
-    { value: "oldest", label: "Oldest First" },
-    { value: "price-asc", label: "Price: Low to High" },
-    { value: "price-desc", label: "Price: High to Low" },
-    { value: "name-asc", label: "Name: A → Z" },
-    { value: "name-desc", label: "Name: Z → A" },
-  ];
+      router.push(`${pathName}?${params.toString()}`, {
+        scroll: false,
+      });
+    },
+    [pathName, router, searchParams]
+  );
 
   return (
     <div className="flex items-center gap-3">
       <label
         htmlFor="sort"
-        className="text-sm font-medium text-muted-foreground hidden sm:block"
+        className="hidden text-sm font-medium text-muted-foreground sm:block"
       >
         Sort by:
       </label>
-      <div className="relative">
-        <select
-          name="sort"
+
+      {/* ✅ Shadcn Select */}
+      <Select value={currentSort} onValueChange={handleFilterChange}>
+        <SelectTrigger
           id="sort"
-          value={currentSort}
-          onChange={(e) => handleFilterChange(e.target.value)}
-          className="appearance-none bg-background border border-border rounded-lg px-4 py-2.5 pr-10 text-sm font-medium text-foreground 
-                   hover:bg-accent hover:border-accent-foreground/20 focus:outline-none focus:ring-2 focus:ring-ring 
-                   focus:ring-offset-2 transition-all duration-200 cursor-pointer min-w-[160px] sm:min-w-[180px]"
+          className="min-w-[160px] sm:min-w-[180px] rounded-lg"
         >
-          {sortOptions.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              className="bg-background text-foreground"
-            >
+          <SelectValue placeholder="Select sort option" />
+        </SelectTrigger>
+        <SelectContent>
+          {SORT_OPTIONS.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
-            </option>
+            </SelectItem>
           ))}
-        </select>
-        <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-      </div>
+        </SelectContent>
+      </Select>
     </div>
   );
 }
