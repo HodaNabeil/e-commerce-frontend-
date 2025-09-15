@@ -3,7 +3,7 @@ Developed a fully responsive e-commerce platform optimized for performance, SEO,
 
 Key Features:
 
-###User Authentication: Secure login, signup, and password reset via Firebase Authentication. Smart redirection based on user actions.
+### User Authentication: Secure login, signup, and password reset via Firebase Authentication. Smart redirection based on user actions.
 
 ### Product Management: Dynamic product fetching with real-time filtering by category and price.
 
@@ -11,7 +11,7 @@ Key Features:
 
 ### Responsive Design: Mobile-first UI with Tailwind CSS and Shadcn UI components.
 
-##Tech Stack:
+## Tech Stack:
 
 ### Frontend: Next.js 15, TypeScript, Zustand, react-hook-form, Zod, Tailwind CSS, Shadcn UI, Lucide React, Swiper.
 
