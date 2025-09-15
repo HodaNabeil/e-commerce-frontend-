@@ -19,4 +19,4 @@ Backend: Firebase (auth, real-time database, APIs).
 
 Extras: react-toastify, js-cookie, class-variance-authority.
 
-This project demonstrates my ability to build scalable, user-centric full-stack apps with modern form handling and responsive design. Check the live demo or repo in my portfolio!
+
